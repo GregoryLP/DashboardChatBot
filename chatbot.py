@@ -8,11 +8,16 @@ import os
 cwd = os.getcwd()
 
 
-def custom_embedding_layer(inputs, input_dim, output_dim, **kwargs):
-    return tf.keras.layers.Embedding(input_dim, output_dim, **kwargs)(inputs)
+class CustomEmbeddingLayer(Layer):
+    def __init__(self, input_dim, output_dim, input_length=None, **kwargs):
+        super(CustomEmbeddingLayer, self).__init__()
+        self.embedding = tf.keras.layers.Embedding(input_dim, output_dim, input_length=input_length, **kwargs)
+
+    def call(self, inputs):
+        return self.embedding(inputs)
 
 # Charger le modèle
-model = tf.keras.models.load_model(cwd + '/chatbot_model.h5', custom_objects={'custom_embedding_layer': custom_embedding_layer})
+model = tf.keras.models.load_model(cwd + '/chatbot_model.h5', custom_objects={'CustomEmbeddingLayer': CustomEmbeddingLayer})
 
 # Charger le tokenizer
 tokenizer = tf.keras.preprocessing.text.Tokenizer()
