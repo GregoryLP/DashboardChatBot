@@ -4,6 +4,7 @@ import tensorflow as tf
 from tensorflow.keras.layers import Layer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import os
+import pandas as pd
 
 cwd = os.getcwd()
 
@@ -31,9 +32,11 @@ class CustomModel(tf.keras.Model):
         return x
 
 
+df = pd.read_csv(cwd + '/dialogs.txt', sep='\t')
+
 # Charger le tokenizer
 tokenizer = tf.keras.preprocessing.text.Tokenizer()
-tokenizer.fit_on_texts(df['question'])
+tokenizer.fit_on_texts(df)
 
 # Définir la longueur maximale de séquence
 max_seq_length = 50
