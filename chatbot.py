@@ -33,7 +33,7 @@ class CustomModel(tf.keras.Model):
 
 # Charger le tokenizer
 tokenizer = tf.keras.preprocessing.text.Tokenizer()
-tokenizer.fit_on_texts(df)
+tokenizer.fit_on_texts(df['question'])
 
 # Définir la longueur maximale de séquence
 max_seq_length = 50
