@@ -2,9 +2,12 @@ import streamlit as st
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+import os
+
+cwd = os.getcwd()
 
 # Charger le modèle
-model = tf.keras.models.load_model('chatbot_model.h5')
+model = tf.keras.models.load_model(cwd + '/chatbot_model.h5')
 
 # Charger le tokenizer
 tokenizer = tf.keras.preprocessing.text.Tokenizer()
