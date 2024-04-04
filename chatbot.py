@@ -7,6 +7,7 @@ import os
 cwd = os.getcwd()
 
 # Charger le modèle
+print(cwd + '/chatbot_model.h5')
 model = tf.keras.models.load_model(cwd + '/chatbot_model.h5')
 
 # Charger le tokenizer
