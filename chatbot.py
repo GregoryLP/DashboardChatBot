@@ -1,13 +1,18 @@
 import streamlit as st
 import numpy as np
 import tensorflow as tf
+from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import os
 
 cwd = os.getcwd()
 
+
+def custom_embedding_layer(inputs, input_dim, output_dim, **kwargs):
+    return tf.keras.layers.Embedding(input_dim, output_dim, **kwargs)(inputs)
+
 # Charger le modèle
-model = tf.keras.models.load_model(cwd + '/chatbot_model.h5', compile=False)
+model = tf.keras.models.load_model(cwd + '/chatbot_model.h5', custom_objects={'custom_embedding_layer': custom_embedding_layer})
 
 # Charger le tokenizer
 tokenizer = tf.keras.preprocessing.text.Tokenizer()
