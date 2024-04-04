@@ -1,7 +1,6 @@
 import streamlit as st
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.models import load_model
 from tensorflow.keras.layers import Layer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import os
@@ -17,12 +16,38 @@ class CustomEmbeddingLayer(Layer):
     def call(self, inputs):
         return self.embedding(inputs)
 
-# Charger le modèle
-model = tf.keras.models.load_model(cwd + '/chatbot_model.h5', custom_objects={'CustomEmbeddingLayer': CustomEmbeddingLayer})
+
+class CustomModel(tf.keras.Model):
+    def __init__(self):
+        super(CustomModel, self).__init__()
+        self.embedding_layer = CustomEmbeddingLayer(input_dim, output_dim, input_length=max_seq_length)
+        # Add other layers of your model here
+        # self.dense_layer = tf.keras.layers.Dense(...)
+
+    def call(self, inputs):
+        x = self.embedding_layer(inputs)
+        # Add your model logic here
+        # x = self.dense_layer(x)
+        return x
+
 
 # Charger le tokenizer
 tokenizer = tf.keras.preprocessing.text.Tokenizer()
 tokenizer.fit_on_texts(df)
+
+# Définir la longueur maximale de séquence
+max_seq_length = 50
+
+# Définir les dimensions de l'embedding
+input_dim = len(tokenizer.word_index) + 1
+output_dim = 100
+
+# Créer une instance du modèle personnalisé
+model = CustomModel()
+model.build((None, max_seq_length))
+
+# Charger les poids du modèle pré-entraîné
+model.load_weights(cwd + '/chatbot_model_weights.h5')
 
 # Fonction pour prédire la réponse
 def predict_answer(input_text):
