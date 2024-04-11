@@ -18,17 +18,17 @@ class CustomEmbeddingLayer(Layer):
         return self.embedding(inputs)
     
 class CustomRNNLayer(Layer):
-    def __init__(self, input_dim, output_dim, input_length=None, **kwargs):
+    def __init__(self, units, **kwargs):
         super(CustomRNNLayer, self).__init__()
-        self.rnn = tf.keras.layers.SimpleRNN(input_dim, output_dim, input_length=input_length, **kwargs)
+        self.rnn = tf.keras.layers.SimpleRNN(units, activation='relu', **kwargs)
 
     def call(self, inputs):
         return self.rnn(inputs)
     
 class CustomLSTMLayer(Layer):
-    def __init__(self, input_dim, output_dim, input_length=None, **kwargs):
+    def __init__(self, units, **kwargs):
         super(CustomLSTMLayer, self).__init__()
-        self.lstm = tf.keras.layers.LSTM(input_dim, output_dim, input_length=input_length, **kwargs)
+        self.lstm = tf.keras.layers.LSTM(units, activation='relu', **kwargs)
 
     def call(self, inputs):
         return self.lstm(inputs)
@@ -38,9 +38,6 @@ class CustomModel(tf.keras.Model):
     def __init__(self):
         super(CustomModel, self).__init__()
         self.embedding_layer = CustomEmbeddingLayer(input_dim, output_dim, input_length=max_seq_length)
-
-        self.rnn_layer = CustomRNNLayer(input_dim, output_dim, input_length=max_seq_length)
-        self.lstm_layer = CustomLSTMLayer(input_dim, output_dim, input_length=max_seq_length)
         # Add other layers of your model here
         self.dense_layer = tf.keras.layers.Dense(128, activation='relu')
         self.rnn_layer = CustomRNNLayer(128, activation='relu')
