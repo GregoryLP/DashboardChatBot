@@ -50,7 +50,7 @@ model = CustomModel()
 model.build((None, max_seq_length))
 
 # Charger les poids du modèle pré-entraîné
-model.load_weights(cwd + '/chatbot_model_weights.h5')
+model.load_weights(cwd + '/chatbot_model.h5')
 
 # Fonction pour prédire la réponse
 def predict_answer(input_text):
