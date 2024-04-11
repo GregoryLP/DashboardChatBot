@@ -18,17 +18,17 @@ class CustomEmbeddingLayer(Layer):
         return self.embedding(inputs)
     
 class CustomRNNLayer(Layer):
-    def __init__(self, units, **kwargs):
+    def __init__(self, input_dim, output_dim, input_length=None, **kwargs):
         super(CustomRNNLayer, self).__init__()
-        self.rnn = tf.keras.layers.SimpleRNN(units, return_sequences=True, return_state=True, **kwargs)
+        self.rnn = tf.keras.layers.SimpleRNN(input_dim, output_dim, input_length=input_length, **kwargs)
 
     def call(self, inputs):
         return self.rnn(inputs)
     
 class CustomLSTMLayer(Layer):
-    def __init__(self, units, **kwargs):
+    def __init__(self, input_dim, output_dim, input_length=None, **kwargs):
         super(CustomLSTMLayer, self).__init__()
-        self.lstm = tf.keras.layers.LSTM(units, return_sequences=True, return_state=True, **kwargs)
+        self.lstm = tf.keras.layers.LSTM(input_dim, output_dim, input_length=input_length, **kwargs)
 
     def call(self, inputs):
         return self.lstm(inputs)
