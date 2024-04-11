@@ -33,7 +33,7 @@ class CustomModel(tf.keras.Model):
     
     def build(self, input_shape):
         super(CustomModel, self).build(input_shape)
-        self.dense_layer.build(input_shape=(None, max_seq_length, output_dim))
+        self.dense_layer.build(input_shape=(None, output_dim))
 
 
 df = pd.read_csv(cwd + '/dialogs.txt', sep='\t')
