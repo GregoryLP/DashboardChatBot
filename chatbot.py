@@ -51,7 +51,7 @@ output_dim = 100
 
 # Créer une instance du modèle personnalisé
 model = CustomModel()
-model.build((None, output_dim))
+model.build((None, max_seq_length))
 
 # Charger les poids du modèle pré-entraîné
 model.load_weights(cwd + '/chatbot_model.h5')
