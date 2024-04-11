@@ -3,12 +3,9 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.layers import Layer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-import os
 import pickle
 
-cwd = os.getcwd()
-
-keras_model = tf.keras.models.load_model(cwd + '/chatbot_model.keras')
+keras_model = tf.keras.models.load_model('chatbot_model.keras')
 
 with open('tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
