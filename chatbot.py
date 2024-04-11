@@ -23,7 +23,7 @@ class CustomModel(tf.keras.Model):
         super(CustomModel, self).__init__()
         self.embedding_layer = CustomEmbeddingLayer(input_dim, output_dim, input_length=max_seq_length)
         # Add other layers of your model here
-        self.dense_layer = tf.keras.layers.Dense(...)
+        self.dense_layer = tf.keras.layers.Dense(128, activation='relu')
 
     def call(self, inputs):
         x = self.embedding_layer(inputs)
